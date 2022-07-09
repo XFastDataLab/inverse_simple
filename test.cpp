@@ -126,6 +126,18 @@ void test_algorithm2(int n, int my_np, std::string type) {
 	//test_gauss_on_cpu(n, my_np, type);
 }
 
+// 直接使用函数公式解决矩阵求逆
+void test_fun_2(int n, int my_np, std::string type) {
+	printf("\n\n*****TEST FUNCTION ON GPU!!!*****\n");
+	printf("\n\n*****size:%d,number of matrix is %d\n", n, my_np);
+	__DATA_TYPE* matrix = NULL;
+	matrix = random_matrix_generate_by_matlab(n, my_np, string("./data/").append(type).append("/").append(num2str(n)).append("/data1.txt"));
+
+	int u = inverse_gauss_func_2(matrix, n, my_np);
+	check_inversed_matrix(matrix, u, n, my_np, type);
+	if (matrix) free(matrix);
+}
+
 
 void test_batched_single_block_mul_gauss_inverse_gpu(int n, int my_np, std::string type) {
 	//1. get Q from satuation curve Q = C/n^2 C = 1396100

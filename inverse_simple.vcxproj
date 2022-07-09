@@ -115,6 +115,7 @@
     <ClInclude Include="device_info.h" />
     <ClInclude Include="gauss_inverse_cpu.h" />
     <ClInclude Include="host_info.h" />
+    <ClInclude Include="kernal_2.h" />
     <ClInclude Include="more_gpu_for_single_block_mul_gauss_inverse.h" />
     <ClInclude Include="single_block_mul_gauss_inverse_gpu.h" />
     <ClInclude Include="single_block_mul_gauss_inverse_per_mul_threads.h" />

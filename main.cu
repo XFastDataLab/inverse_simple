@@ -9,8 +9,8 @@
 
 #include "def.h"
 
-int main() {
-	
+
+void test_data1() {
 	int MY_N = getConfigInt("MY_N");
 	int MY_NP = getConfigInt("MY_NP");
 
@@ -42,7 +42,7 @@ int main() {
 		51,52,53,54,55,56,57,58,59,60,
 		61,62,63,64,65,66,67,68,69,70
 	};
-	
+
 	int sizeOfmatSizes = 69;*/
 
 	int mat_numbers[] = {
@@ -54,14 +54,14 @@ int main() {
 		4096, 5120, 8192, 10240, 15360,20480,25600,30720,35840,
 		40960,46080,51240,56320,61440,66560,71680,76800,81920
 	};
-	
+
 	int sizeOfmatNum = 18;*/
-	
+
 
 	clearCPUResults();
 	clearGPUResults();
 	clearCheckedInfo();
-	
+
 	for (int i = 0; i < sizeOfmatNum; i++) {
 		writeCPUResults(mat_numbers[i]);
 		writeGPUResults(mat_numbers[i]);
@@ -106,6 +106,53 @@ int main() {
 	//test_cublas(mat_sizes[2], mat_numbers[12], "definite");
 
 	//test_single_block_mul_gauss_inverse_gpu(mat_sizes[2], mat_numbers[12], "definite");
+}
+
+int main() {
+	
+	int MY_N = getConfigInt("MY_N");
+	int MY_NP = getConfigInt("MY_NP");
+
+	int mat_sizes[] = {
+		2
+	};
+	int sizeOfmatSizes = 1;
+
+
+	int mat_numbers[] = {
+		1,1024,10240,102400,10240000
+	};
+	int sizeOfmatNum = 5;
+
+	
+	clearCPUResults();
+	clearGPUResults();
+	clearCheckedInfo();
+	
+	for (int i = 0; i < sizeOfmatNum; i++) {
+		writeCPUResults(mat_numbers[i]);
+		writeGPUResults(mat_numbers[i]);
+	}
+	writeCPUResults(0, true);
+	writeGPUResults(0, true);
+
+	CheckGPUInfo();
+	//return 0;
+	//type of matrix: definite/random/triangleLow/triangleUp
+	// //测试算法2，batched算法4
+	for (int i = 0; i < sizeOfmatSizes; i++) {
+		setConfigInt("MY_N", mat_sizes[i]);
+		printf("i is %d\n", mat_sizes[i]);
+		for (int j = 0; j < sizeOfmatNum; j++) {
+			//CheckMemoryInfo(mat_sizes[i], mat_numbers[j]);
+			setConfigInt("MY_NP", mat_numbers[j]);
+			test_fun_2(mat_sizes[i], mat_numbers[j], "definite");
+			test_gauss_on_cpu(mat_sizes[i], mat_numbers[j], "definite");
+		}
+		writeCPUResults(0, true);
+		writeGPUResults(0, true);
+	}
+
 
 	return 0;
 }

@@ -37,6 +37,9 @@
     <ClInclude Include="tools.h" />
     <ClInclude Include="tools_for_matrix_inverse.h" />
     <ClInclude Include="tools_for_more_gpu.h" />
+    <ClInclude Include="kernal_2.h">
+      <Filter>function</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />

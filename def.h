@@ -60,6 +60,8 @@ typedef  float __DATA_TYPE;
 
 #include "cublas_inv_matrix.cuh"
 
+#include "kernal_2.h"
+
 
 
 
