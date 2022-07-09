@@ -88,6 +88,7 @@
     <CudaCompile Include="algorithm2.cu" />
     <CudaCompile Include="cublas_inv_matrix.cu" />
     <CudaCompile Include="device_info.cu" />
+    <CudaCompile Include="kernal_2.cu" />
     <CudaCompile Include="main.cu" />
     <CudaCompile Include="more_gpu_for_single_block_mul_gauss_inverse.cu" />
     <CudaCompile Include="single_block_mul_gauss_inverse_gpu.cu" />
