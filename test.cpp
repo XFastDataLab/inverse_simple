@@ -135,6 +135,7 @@ void test_fun_2(int n, int my_np, std::string type) {
 
 	int u = inverse_gauss_func_2(matrix, n, my_np);
 	check_inversed_matrix(matrix, u, n, my_np, type);
+	tools_print_matrix(matrix, n);
 	if (matrix) free(matrix);
 }
 

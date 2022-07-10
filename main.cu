@@ -120,9 +120,9 @@ int main() {
 
 
 	int mat_numbers[] = {
-		1,1024,10240,102400,10240000
+		1,100,1024,10240,102400,1024000,10240000
 	};
-	int sizeOfmatNum = 5;
+	int sizeOfmatNum =7;
 
 	
 	clearCPUResults();

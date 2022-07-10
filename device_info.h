@@ -19,6 +19,7 @@ typedef struct Device {
 	int SMCount;
 	size_t totalGlobalMem;
 	size_t sharedMemPerBlockOptin; /**< Per device maximum shared memory per block usable by special opt in */
+	int multiProcessorCount;
 	struct Device* next;
 }Device, * Devices;
 

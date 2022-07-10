@@ -1,5 +1,7 @@
  size:2 my_np:1 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:1 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
+ size:2 my_np:100 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
+ size:2 my_np:100 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:1024 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:1024 index:102::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:1024 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
@@ -12,6 +14,10 @@
  size:2 my_np:102400 index:102::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:102400 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:102400 index:102::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
+ size:2 my_np:1024000 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
+ size:2 my_np:1024000 index:102::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
+ size:2 my_np:1024000 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
+ size:2 my_np:1024000 index:102::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:10240000 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:10240000 index:102::realVal:1.007757425308228 testVal:1.007757425308228.result:YES
  size:2 my_np:10240000 index:0::realVal:1.007757425308228 testVal:1.007757425308228.result:YES

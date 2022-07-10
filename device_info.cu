@@ -38,6 +38,7 @@ void GetDeviceInfo(DeviceInfo& deviceInfo) {
 		d2->sharedMemPerBlockOptin = deviceProp.sharedMemPerBlockOptin;
 		deviceInfo.allDevicesSMCount += d2->SMCount;
 		d2->index = i;
+		d2->multiProcessorCount = deviceProp.multiProcessorCount;
 		d2->totalGlobalMem = deviceProp.totalGlobalMem;
 		d1->next = d2;
 		d1 = d2;
@@ -72,8 +73,8 @@ void CheckGPUInfo() {
 	}
 
 	while (ds) {
-		printf("%dth GPU has %d Streams,%.2f GB global memory. %.2f kb shared memory per block\n",
-			ds->index, ds->SMCount, ds->totalGlobalMem*1.0/1024/1024/1024,ds->sharedMemPerBlockOptin *1.0/1024);
+		printf("%dth GPU has %d Streams, %.2f GB global memory. %.2f kb shared memory per block, %d multiPreocessorCount \n",
+			ds->index, ds->SMCount,  ds->totalGlobalMem*1.0/1024/1024/1024,ds->sharedMemPerBlockOptin *1.0/1024, ds->multiProcessorCount);
 		allGlobalMemory += ds->totalGlobalMem;
 
 		if (ds->SMCount > maxSM) {
