@@ -10,7 +10,7 @@
 #pragma once
 
 //unified data type
-typedef  double __DATA_TYPE;
+typedef  float __DATA_TYPE;
 
 #include "windows.h"
 #include <stdio.h>
