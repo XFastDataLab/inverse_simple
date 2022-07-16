@@ -143,8 +143,10 @@ __DATA_TYPE* random_matrix_generate_by_matlab(int n,int my_np, std::string path)
 	if (res == 0) d_mat = (__DATA_TYPE*)malloc(sizeof(__DATA_TYPE) * size * my_np);
 	else d_mat = (__DATA_TYPE*)malloc(sizeof(__DATA_TYPE) * size * deviceCounts);
 
-	FILE* file = fopen(path.c_str(), "r");
+	FILE* file;
+	fopen_s(&file, path.c_str(), "r");
 	if (file == NULL) {
+		cout << "random_matrix_generate_by_matlab ";
 		cout << path;
 		cout << " File is not existed!!!" << endl;
 		exit(0);
@@ -238,7 +240,7 @@ double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 }
 
 __DATA_TYPE* random_matrix_generate_by_matlab(int n, int my_np) {
-	return random_matrix_generate_by_matlab(n, my_np, string("./data/definite/").append(num2str(n)).append(" / data1.txt"));
+	return random_matrix_generate_by_matlab(n, my_np, string("./data/definite/").append(num2str(n)).append("/ data1.txt"));
 }
 
 
@@ -326,7 +328,7 @@ __DATA_TYPE readInversedMatrix(int size, std::string type) {
 	__DATA_TYPE val;
 	string path = string("./data/").append(type).append("/").append(num2str(size)).append("/data1.txt");
 	fstream fs(path);
-	if (fs) {
+	if (fs.is_open()) {
 		string str;
 		getline(fs, str);
 		getline(fs, str);
@@ -336,9 +338,11 @@ __DATA_TYPE readInversedMatrix(int size, std::string type) {
 		return val;
 	}
 	else {
+		cout << "readInversedMatrix";
 		cout << path;
 		cout << " File is not existed!!!" << endl;
-		exit(0);
+
+		return -1;
 	}
 
 }

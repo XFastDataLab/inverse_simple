@@ -197,7 +197,7 @@ void test_more_gpu_for_single_block_mul_gauss_inverse_gpu(int size, int my_np, s
 	test_gauss_on_cpu(size, my_np,type);
 }
 
-void test_cublas(int size, int my_np, std::string type) {
+void test_double_cublas(int size, int my_np, std::string type) {
 	printf("\n\n*****TEST CUBLAS INVERSE!!!*****\n");
 	printf("\n\n*****size:%d,number of matrix is %d\n", size, my_np);
 	double** matrix_gpu = NULL, ** d_out_gpu = new double* [my_np];
@@ -225,16 +225,12 @@ void test_cublas(int size, int my_np, std::string type) {
 	cudaEventDestroy(stop);
 	printf("cublas gpu÷¥–– ±º‰£∫%f(ms)\n", time_elapsed);
 
-	//check_inversed_matrix2(d_out_gpu, u, size, my_np, type);
-	
-
 	for (int i = 0; i < my_np; i++) {
 		if (matrix_gpu[i]) free(matrix_gpu[i]);
 		if (d_out_gpu[i]) free(d_out_gpu[i]);
 	}
 	if (matrix_gpu) free(matrix_gpu);
-	if (d_out_gpu) free(d_out_gpu);
-	test_gauss_on_cpu(size, my_np, type);
+	if (d_out_gpu) delete[] d_out_gpu;
 
 }
 

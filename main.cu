@@ -49,7 +49,7 @@ void test_data1() {
 
 	CheckGPUInfo();
 	//type of matrix: definite/random/triangleLow/triangleUp
-	for (int i = 0; i < sizeOfmatSizes; i++) {
+	for (int i = 20; i < sizeOfmatSizes; i++) {
 		setConfigInt("MY_N", mat_sizes[i]);
 		printf("i is %d\n", mat_sizes[i]);
 		for (int j = 0; j < sizeOfmatNum; j++) {
