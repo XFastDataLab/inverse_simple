@@ -15,7 +15,7 @@ static
 void check_inversed_matrix(__DATA_TYPE* matrix, bool u, int n, int my_np, std::string type = std::string("definite")) {
 
 	if (u) {
-		printf("\n*****gpu inverse completely!!!*****\n");
+		printf("\n*****inverse completely!!!*****\n");
 		double realVal = readInversedMatrix(n, type);
 		for (int i = 0; i < my_np; i++) {
 			if (i == 0 || i == 102) {

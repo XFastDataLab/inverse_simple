@@ -9,6 +9,7 @@
 
 #include "def.h"
 
+
 void test_data1() {
 
 	int mat_sizes[] = {
@@ -54,7 +55,6 @@ void test_data1() {
 }
 
 int main() {
-	
 	test_data1();
 	return 0;
 }

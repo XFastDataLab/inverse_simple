@@ -13,6 +13,5 @@
 
 void test_gauss_on_cpu(int n, int my_np, std::string type);
 
-void about(__DATA_TYPE a);
 #endif // !MY_TEST_H
 
