@@ -56,12 +56,12 @@ void test_data1() {
 		for (int j = 0; j < sizeOfmatNum; j++) {
 			CheckMemoryInfo(mat_sizes[i], mat_numbers[j]);
 			setConfigInt("MY_NP", mat_numbers[j]);
-			test_algorithm2(mat_sizes[i], mat_numbers[j], "definite");
+			//test_algorithm2(mat_sizes[i], mat_numbers[j], "definite");
 			//test_batched_single_block_mul_gauss_inverse_gpu(mat_sizes[i], mat_numbers[j], "definite");
 			//test_cublas(mat_sizes[i], mat_numbers[j], "definite");
 			//printf("\n\n*****TEST SINGLE BLOCK MULTIBL GAUSS INVERSE ON MULTIPLE CPUs!!!*****\n");
 			//printf("\n\n*****size:%d,number of matrix is %d\n", mat_sizes[i], mat_numbers[j]);
-			//test_gauss_on_cpu(mat_sizes[i], mat_numbers[j], "definite");
+			test_gauss_on_cpu(mat_sizes[i], mat_numbers[j], "definite");
 		}
 		writeCPUResults(0, true);
 		writeGPUResults(0, true);
