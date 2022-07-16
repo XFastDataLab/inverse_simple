@@ -56,22 +56,5 @@ bool CheckMemoryInfo(int size,int my_np) {
     printf("Avaliable space is :%.5f GB\n", space);
     printf("The space you need is:%.5f GB\n", need);
 
-    if (need - space > 0.02) {
-        printf("Warnning:Avaliable space is not enough!!!\n");
-        printf("Would you like to use the matrixs copied first one just for testing? That's a helpful way just spend a little host memory.(Y/N)\n");
-        char answer;
-        int i = scanf("%c", &answer);
-        if (answer == 'Y' || answer == 'y') setConfigString(USE_COPY_MATRIX_C, "1");
-        else {
-            setConfigString(USE_COPY_MATRIX_C, "0");
-            printf("The pragram is failed because of lacking host memory!!!\n");
-            exit(0);
-        }
-        return false;
-    }
-    else {
-        setConfigString(USE_COPY_MATRIX_C, "0");
-    }
-
     return true;
 }

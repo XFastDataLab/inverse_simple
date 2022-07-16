@@ -3,24 +3,7 @@
 */
 #include "def.h"
 
-/*
-    Debug output
-*/
-void tools_gpuAssert(cudaError_t code, const char *file, int line)
-{
-   if (code != cudaSuccess)
-   {
-      fprintf(stderr,"GPUassert: %s %s %d\n", cudaGetErrorString(code), file, line);
-   }
-}
-
-void tools_gpuAssert(int index,cudaError_t code, const char* file, int line)
-{
-	if (code != cudaSuccess)
-	{
-		fprintf(stderr, "%dth GPUassert: %s %s %d\n",index, cudaGetErrorString(code), file, line);
-	}
-}
+using namespace std;
 
 static void printInfo(__DATA_TYPE data) {
 	if (is_same<__DATA_TYPE, double>::value) {
@@ -133,17 +116,11 @@ int str2int(string s) {
 __DATA_TYPE* random_matrix_generate_by_matlab(int n,int my_np, std::string path) {
 	int size = n * n;
 	__DATA_TYPE* d_mat;
-	int res = getConfigInt(USE_COPY_MATRIX_C);
 
-	//get number of devices
-	DeviceInfo info;
-	GetDeviceInfo(info);
-	int deviceCounts = info.deviceCount;
+	d_mat = (__DATA_TYPE*)malloc(sizeof(__DATA_TYPE) * size * my_np);
 
-	if (res == 0) d_mat = (__DATA_TYPE*)malloc(sizeof(__DATA_TYPE) * size * my_np);
-	else d_mat = (__DATA_TYPE*)malloc(sizeof(__DATA_TYPE) * size * deviceCounts);
-
-	FILE* file = fopen(path.c_str(), "r");
+	FILE* file;
+	fopen_s(&file, path.c_str(), "r");
 	if (file == NULL) {
 		cout << path;
 		cout << " File is not existed!!!" << endl;
@@ -153,10 +130,10 @@ __DATA_TYPE* random_matrix_generate_by_matlab(int n,int my_np, std::string path)
 	for (int i = 0; i < size; i++) {
 		r = 0;
 		if (is_same<double, __DATA_TYPE>::value) {
-			r = fscanf(file, "%lf", d_mat + i);
+			r = fscanf_s(file, "%lf", d_mat + i);
 		}
 		else if (is_same<float, __DATA_TYPE>::value) {
-			r = fscanf(file, "%f", d_mat + i);
+			r = fscanf_s(file, "%f", d_mat + i);
 		}
 		
 		if (r == EOF || r == 0) {
@@ -166,54 +143,35 @@ __DATA_TYPE* random_matrix_generate_by_matlab(int n,int my_np, std::string path)
 	}
 
 
-	if (res == 0) {
-		for (int i = size; i < size * my_np; i++) {
-			d_mat[i] = d_mat[i % size];
-		}
-	}
-	else {
-		for (int i = size; i < size * deviceCounts; i++) {
-			d_mat[i] = d_mat[i % size];
-		}
+	for (int i = size; i < size * my_np; i++) {
+		d_mat[i] = d_mat[i % size];
 	}
 
 	fclose(file);
-	free_device_list(info.device);
 	return d_mat;
 }
 
 double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
-	int res = getConfigInt(USE_COPY_MATRIX_C);
 
-	//get number of devices
-	DeviceInfo info;
-	GetDeviceInfo(info);
-	int deviceCounts = info.deviceCount;
 
 	int size = n * n;
 	double** d_mat = new double* [my_np];
 
-	if (res == 0) {
-		for (int i = 0; i < my_np; i++) {
-			d_mat[i] = (double*)malloc(sizeof(double) * size);
-		}
-	}
-	else {
-		for (int i = 0; i < deviceCounts; i++) {
-			d_mat[i] = (double*)malloc(sizeof(double) * size);
-		}
+	for (int i = 0; i < my_np; i++) {
+		d_mat[i] = (double*)malloc(sizeof(double) * size);
 	}
 
-	FILE* file = fopen(path.c_str(), "r");
+	FILE* file;
+	fopen_s(&file, path.c_str(), "r");
 	int r;
 
 	for (int i = 0; i < size; i++) {
 		r = 0;
 		if (is_same<double, __DATA_TYPE>::value) {
-			r = fscanf(file, "%lf", &d_mat[0][i]);
+			r = fscanf_s(file, "%lf", &d_mat[0][i]);
 		}
 		else if (is_same<float, __DATA_TYPE>::value) {
-			r = fscanf(file, "%f", &d_mat[0][i]);
+			r = fscanf_s(file, "%f", &d_mat[0][i]);
 		}
 
 		if (r == EOF || r == 0) {
@@ -222,18 +180,10 @@ double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 		}
 	}
 
-	if (res == 0) {
-		for (int i = 1; i < my_np; i++) {
-			memcpy(d_mat[i], d_mat[0], sizeof(double) * size);
-		}
-	}
-	else {
-		for (int i = 1; i < deviceCounts; i++) {
-			memcpy(d_mat[i], d_mat[0], sizeof(double) * size);
-		}
+	for (int i = 1; i < my_np; i++) {
+		memcpy(d_mat[i], d_mat[0], sizeof(double) * size);
 	}
 
-	free_device_list(info.device);
 	return d_mat;
 }
 

@@ -1,55 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="algorithm2.cu" />
-    <CudaCompile Include="cublas_inv_matrix.cu" />
-    <CudaCompile Include="device_info.cu" />
-    <CudaCompile Include="main.cu" />
-    <CudaCompile Include="more_gpu_for_single_block_mul_gauss_inverse.cu" />
-    <CudaCompile Include="single_block_mul_gauss_inverse_gpu.cu" />
-    <CudaCompile Include="single_block_mul_gauss_inverse_per_mul_threads.cu" />
-    <CudaCompile Include="tools.cu" />
-    <CudaCompile Include="tools_for_matrix_inverse.cu" />
-    <CudaCompile Include="tools_for_more_gpu.cu" />
-    <CudaCompile Include="kernal_2.cu">
-      <Filter>function</Filter>
-    </CudaCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="config_params.cpp" />
-    <ClCompile Include="gauss_inverse_cpu.cpp" />
-    <ClCompile Include="host_info.cpp" />
-    <ClCompile Include="test.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="algorithm2.h" />
-    <ClInclude Include="config_params.h" />
-    <ClInclude Include="cublas_inv_matrix.cuh" />
-    <ClInclude Include="cyw_timer.h" />
-    <ClInclude Include="def.h" />
-    <ClInclude Include="device_info.h" />
-    <ClInclude Include="gauss_inverse_cpu.h" />
-    <ClInclude Include="host_info.h" />
-    <ClInclude Include="more_gpu_for_single_block_mul_gauss_inverse.h" />
-    <ClInclude Include="single_block_mul_gauss_inverse_gpu.h" />
-    <ClInclude Include="single_block_mul_gauss_inverse_per_mul_threads.h" />
-    <ClInclude Include="test.h" />
-    <ClInclude Include="tools.h" />
-    <ClInclude Include="tools_for_matrix_inverse.h" />
-    <ClInclude Include="tools_for_more_gpu.h" />
-    <ClInclude Include="kernal_2.h">
-      <Filter>function</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="config.ini" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="results_gpu.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="function">
-      <UniqueIdentifier>{dee3c6da-039d-4ab3-b5c5-746032b97e8c}</UniqueIdentifier>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="gauss_inverse_cpu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="host_info.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cyw_timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="def.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="gauss_inverse_cpu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="host_info.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

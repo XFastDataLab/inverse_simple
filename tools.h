@@ -10,23 +10,11 @@
 #ifndef MY_TOOLS_H
 #define MY_TOOLS_H
 
-#define cudaCheck(ans) do{if(ans != cudaSuccess){fprintf(stderr,"CUDA assert: %s %s %d\n", cudaGetErrorString(ans),  __FILE__, __LINE__); exit(EXIT_FAILURE);} }while(false)
-
-#define gpuErrchk(ans) { tools_gpuAssert((ans), __FILE__, __LINE__); }
-
-#define gpuErrchk2(ans,index) { tools_gpuAssert(index,(ans), __FILE__, __LINE__); }
-
 /**
  * CUDA Error types
  */
 typedef enum cudaError cudaError_t;
 
-/*
-    Debug output
-*/
-void tools_gpuAssert(cudaError_t code, const char *file, int line);
-
-void tools_gpuAssert(int index, cudaError_t code, const char* file, int line);
 
 /*
   Print a Matrix with with N x N dimension

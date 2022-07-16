@@ -103,21 +103,6 @@ public:
                 <<this->elapsed_time_total*1000<<"ms, " <<this->elapsed_time_total<<"s\n";
     }
 
-    void strcat_to_buffer(char* buffer){
-        strcat(buffer,"running time:");
-        my_strcat_double(buffer,elapsed_time_total);
-    }
-
-    void strcat_to_buffer(char* out_info, char* buffer){
-        strcat(buffer,out_info);
-        my_strcat_double(buffer,elapsed_time_total);
-    }
-    void my_strcat_double(char* buffer, double val) {
-        char str_tmp[200];
-        sprintf(str_tmp, "%f", val);
-
-        strcat(buffer, str_tmp);
-    }
 private:
     double start_time;
 	double elapsed_time;
