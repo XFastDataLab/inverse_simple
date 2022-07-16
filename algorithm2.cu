@@ -287,7 +287,9 @@ int get_devided_number_of_single_to_mul_sm(int size, int my_np) {
 	return ceil(dy * 65536 * 1.0 / 35);
 }
 
-
+/**
+ algorithm1 in revised paper
+*/
 int my_algorithm2(__DATA_TYPE* out, int size, int my_np) {
 
 	if (size > 90) {
