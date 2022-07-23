@@ -86,13 +86,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="algorithm2.cu" />
-    <CudaCompile Include="cublas_inv_matrix.cu" />
     <CudaCompile Include="device_info.cu" />
-    <CudaCompile Include="kernal_2.cu" />
     <CudaCompile Include="main.cu" />
-    <CudaCompile Include="more_gpu_for_single_block_mul_gauss_inverse.cu" />
-    <CudaCompile Include="single_block_mul_gauss_inverse_gpu.cu" />
-    <CudaCompile Include="single_block_mul_gauss_inverse_per_mul_threads.cu" />
     <CudaCompile Include="tools.cu" />
     <CudaCompile Include="tools_for_matrix_inverse.cu" />
     <CudaCompile Include="tools_for_more_gpu.cu" />
@@ -109,16 +104,11 @@
   <ItemGroup>
     <ClInclude Include="algorithm2.h" />
     <ClInclude Include="config_params.h" />
-    <ClInclude Include="cublas_inv_matrix.cuh" />
     <ClInclude Include="cyw_timer.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="device_info.h" />
     <ClInclude Include="gauss_inverse_cpu.h" />
     <ClInclude Include="host_info.h" />
-    <ClInclude Include="kernal_2.h" />
-    <ClInclude Include="more_gpu_for_single_block_mul_gauss_inverse.h" />
-    <ClInclude Include="single_block_mul_gauss_inverse_gpu.h" />
-    <ClInclude Include="single_block_mul_gauss_inverse_per_mul_threads.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="tools_for_matrix_inverse.h" />

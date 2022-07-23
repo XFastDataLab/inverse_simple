@@ -59,50 +59,6 @@ void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int size, int dy) {
 }
 
 
-//static __global__
-//void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int size, int dy) {
-//
-//	register int idx = threadIdx.x%size;
-//	register int idy = threadIdx.x/size;
-//	register int bx = blockIdx.x;
-//
-//	register int dis = idy * size * size; //Compute the distance between idy-th matrix and the address of mat_tmp.
-//
-//	if (idx >= size || idy >= dy) return;
-//
-//	mat_tmp += bx * size * size * dy;
-//	extern __shared__ __DATA_TYPE mat[]; //using static shared memory 48 KB
-//	Matrix_copy_glob2shr(mat_tmp + idx * size + dis, mat + idx * size + dis, size);
-//	__syncthreads();
-//
-//	int i, j, k;
-//	__DATA_TYPE c;
-//	register int ksize = dis;
-//	for (k = 0; k < size; k++) {
-//		//1.m(k,k) = 1/m(k,k)
-//		register int mid = ksize + k;
-//		mat[mid] = 1.0 / mat[mid];
-//		c = mat[mid];
-//
-//		//2.m(i,k) = -m(k,k) * m(i,k), i!=k
-//		if (idx != k) mat[idx * size + k + dis] *= -1 * c;
-//
-//		__syncthreads();
-//		//3.m(i,j) = m(i,j) + m(i,k) * m(k,j), i,j != k
-//		register int tem = dis;
-//		for (i = 0; i < size; i++) {
-//			if (idx != k ||i!=k) mat[tem + idx] += mat[tem + k] * mat[ksize + idx];
-//			tem += size;
-//		}
-//
-//		//4.m(k,j) = m(k,k) * m(k,j), j != k
-//		if (idx != k)  mat[ksize + idx] *= c;
-//		__syncthreads();
-//		ksize += size;
-//	}
-//
-//	Matrix_copy_shr2glob(mat + idx * size + dis, mat_tmp + idx * size + dis, size);
-//}
 
 static
 int single_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
@@ -296,14 +252,12 @@ int my_algorithm2(__DATA_TYPE* out, int size, int my_np) {
 		printf("ERROR!!! The method allow the size of matrix small than 90!!!\n");
 		return 0;
 	}
-	/*int limit = get_devided_number_of_single_to_mul_sm(size,my_np);
 
-	printf("Limit number of matrixes:%d\n", limit);*/
-
-	if (my_np >= 1 && my_np < 1024) {
+	single_sm_inverse_gauss_gpu(out, size, my_np);
+	/*if (my_np >= 1 && my_np < 1024) {
 		return single_sm_inverse_gauss_gpu(out, size, my_np);
 	}
 	else {
 		return more_sm_inverse_gauss_gpu(out, size, my_np);
-	}
+	}*/
 }

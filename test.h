@@ -11,26 +11,10 @@
 #ifndef MY_TEST_H
 #define MY_TEST_H
 
-void test_gauss_on_cpu(int n, int my_np, std::string type);
 
-void test_single_block_mul_gauss_inverse_gpu(int size, int my_np, float& elapse_time);
-
-void test_single_block_mul_gauss_inverse_gpu(int n, int my_np, std::string type, float& elapse_time);
 
 void test_algorithm2(int n, int my_np, std::string type);
 
-void test_batched_single_block_mul_gauss_inverse_gpu(int n, int my_np, std::string type);
 
-void test_more_gpu_for_single_block_mul_gauss_inverse_gpu(int size, int my_np);
-
-void test_more_gpu_for_single_block_mul_gauss_inverse_gpu(int size, int my_np,std::string type);
-
-void test_cublas(int size, int my_np, std::string type);
-void test_cublas(int size, int my_np, std::string type);
-
-// 直接使用函数公式解决矩阵求逆
-void test_fun_2(int n, int my_np, std::string type);
-
-void about(__DATA_TYPE a);
 #endif // !MY_TEST_H
 
