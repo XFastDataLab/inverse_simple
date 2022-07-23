@@ -17,26 +17,15 @@ int my_gauss_inverse_gpu_by_cublas(float** d_in, int size, float** d_out, int my
 	cudaMalloc((void**)&info, sizeof(int) * my_np);
 	cudaMalloc((void**)&pivo, sizeof(int) * size * my_np);
 
-	float** srchd = new float* [my_np];
-	for (int i = 0; i < my_np; i++) {
-		cudaMalloc((void**)&srchd[i], sizeof(float) * size * size);
-		cudaMemcpy(srchd[i], d_in[i], sizeof(float) * size * size, cudaMemcpyHostToDevice);
-	}
 
 	float** gpuMat;
 	cudaMalloc((void**)&gpuMat, sizeof(float*) * my_np);
-	cudaMemcpy(gpuMat, srchd, sizeof(float*) * my_np, cudaMemcpyHostToDevice);
-
-
-	float** resulthd = new float* [my_np];
-	for (int i = 0; i < my_np; i++) {
-		cudaMalloc((void**)&resulthd[i], sizeof(float) * size * size);
-	}
+	cudaMemcpy(gpuMat, d_in, sizeof(float*) * my_np, cudaMemcpyDeviceToDevice);
 
 	
 	float** gpuInvMat;
 	cudaMalloc((void**)&gpuInvMat, sizeof(float*) * my_np);
-	cudaMemcpy(gpuInvMat, resulthd, sizeof(float*) * my_np, cudaMemcpyHostToDevice);
+	cudaMemcpy(gpuInvMat, d_out, sizeof(float*) * my_np, cudaMemcpyDeviceToDevice);
 
 	cudaEventRecord(start, 0);
 	cublasSgetrfBatched(handle, size, gpuMat, size, pivo, info, my_np);
@@ -47,9 +36,9 @@ int my_gauss_inverse_gpu_by_cublas(float** d_in, int size, float** d_out, int my
 	cudaDeviceSynchronize();
 	cudaEventRecord(stop, 0);
 	
-	for (int i = 0; i < my_np; i++) {
+	/*for (int i = 0; i < my_np; i++) {
 		cudaMemcpy(d_out[i], resulthd[i], sizeof(float) * size * size, cudaMemcpyDeviceToHost);
-	}
+	}*/
 
 	
 
@@ -67,10 +56,9 @@ int my_gauss_inverse_gpu_by_cublas(float** d_in, int size, float** d_out, int my
 	cudaFree(pivo);
 	cudaFree(gpuMat);
 	cudaFree(gpuInvMat);
-	for (int i = 0; i < my_np; i++) {
-		cudaFree(srchd[i]);
+	/*for (int i = 0; i < my_np; i++) {
 		cudaFree(resulthd[i]);
-	}
+	}*/
 
 	return 1;
 }

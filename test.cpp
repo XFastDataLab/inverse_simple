@@ -65,13 +65,16 @@ void test_cublas(int size, int my_np, std::string type) {
 	printf("\n\n*****TEST CUBLAS INVERSE!!!*****\n");
 	printf("\n\n*****size:%d,number of matrix is %d\n", size, my_np);
 	float** matrix_gpu = NULL, ** d_out_gpu = new float* [my_np];
-	matrix_gpu = random_matrix_generate_by_matlab2(size, my_np, 
-		string("./data/").append(type).append("/").append(num2str(size)).append("/data1.txt"));
+	cout << size << endl;
+	cout << my_np << endl;
+	cout << string("./data/").append(type).append("/").append(num2str(size)).append("/data1.txt") << endl;
+	matrix_gpu = random_matrix_generate_by_matlab2(size, my_np, string("./data/").append(type).append("/").append(num2str(size)).append("/data1.txt"));
 
 
 	for (int i = 0; i < my_np; i++) {
-		d_out_gpu[i] = (float*)malloc(sizeof(float) * size * size);
-		memset(d_out_gpu[i], 0, sizeof(float) * size * size);
+		cudaMalloc((void**)&d_out_gpu[i], sizeof(float) * size * size);
+		//d_out_gpu[i] = (float*)malloc(sizeof(float) * size * size);
+		//memset(d_out_gpu[i], 0, sizeof(float) * size * size);
 	}
 
 	CYW_TIMER timer;
@@ -85,8 +88,10 @@ void test_cublas(int size, int my_np, std::string type) {
 	timer.print();
 
 	for (int i = 0; i < my_np; i++) {
-		if (matrix_gpu[i]) free(matrix_gpu[i]);
-		if (d_out_gpu[i]) free(d_out_gpu[i]);
+		cudaFree(matrix_gpu[i]);
+		cudaFree(d_out_gpu[i]);
+		//if (matrix_gpu[i]) free(matrix_gpu[i]);
+		//if (d_out_gpu[i]) free(d_out_gpu[i]);
 	}
 	if (matrix_gpu) free(matrix_gpu);
 	if (d_out_gpu) delete[] d_out_gpu;
