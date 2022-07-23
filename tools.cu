@@ -184,7 +184,7 @@ __DATA_TYPE* random_matrix_generate_by_matlab(int n,int my_np, std::string path)
 	return d_mat;
 }
 
-double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
+float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 	int res = getConfigInt(USE_COPY_MATRIX_C);
 
 	//get number of devices
@@ -193,16 +193,16 @@ double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 	int deviceCounts = info.deviceCount;
 
 	int size = n * n;
-	double** d_mat = new double* [my_np];
+	float** d_mat = new float* [my_np];
 
 	if (res == 0) {
 		for (int i = 0; i < my_np; i++) {
-			d_mat[i] = (double*)malloc(sizeof(double) * size);
+			d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}
 	else {
 		for (int i = 0; i < deviceCounts; i++) {
-			d_mat[i] = (double*)malloc(sizeof(double) * size);
+			d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}
 
@@ -226,12 +226,12 @@ double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 
 	if (res == 0) {
 		for (int i = 1; i < my_np; i++) {
-			memcpy(d_mat[i], d_mat[0], sizeof(double) * size);
+			memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
 		}
 	}
 	else {
 		for (int i = 1; i < deviceCounts; i++) {
-			memcpy(d_mat[i], d_mat[0], sizeof(double) * size);
+			memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
 		}
 	}
 

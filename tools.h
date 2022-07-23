@@ -54,7 +54,7 @@ bool is_equal(__DATA_TYPE a, __DATA_TYPE b);
 
 __DATA_TYPE* random_matrix_generate_by_matlab(int n, int my_np, std::string path);
 
-double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path);
+float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path);
 
 __DATA_TYPE* random_matrix_generate_by_matlab(int n, int my_np);
 

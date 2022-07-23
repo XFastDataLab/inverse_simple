@@ -51,16 +51,11 @@ typedef  float __DATA_TYPE;
 #include "cyw_timer.h"
 #include "test.h"
 
-#include "gauss_inverse_cpu.h"
 
-#include "single_block_mul_gauss_inverse_gpu.h"
-#include "algorithm2.h"
 
-#include "more_gpu_for_single_block_mul_gauss_inverse.h"
 
 #include "cublas_inv_matrix.cuh"
 
-#include "kernal_2.h"
 
 
 
