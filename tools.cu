@@ -187,15 +187,12 @@ __DATA_TYPE* random_matrix_generate_by_matlab(int n,int my_np, std::string path)
 float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 	int res = getConfigInt(USE_COPY_MATRIX_C);
 
-	cout << 1 << endl;
 	//get number of devices
 	DeviceInfo info;
 	GetDeviceInfo(info);
 	int deviceCounts = info.deviceCount;
-	cout << 2 << endl;
 	int size = n * n;
 	float** d_mat = new float* [my_np];
-	cout << 3 << endl;
 	if (res == 0) {
 		for (int i = 0; i < my_np; i++) {
 			cudaMalloc((void**)&d_mat[i], sizeof(float) * size);
@@ -208,16 +205,13 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 			//d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}
-	cout << 4 << endl;
 
 	FILE* file = fopen(path.c_str(), "r");
 	int r;
-	cout << 5 << endl;
 	for (int i = 0; i < size; i++) {
 		r = 0;
 		float temp;
 		double temp1;
-		cout << i << endl;
 		if (is_same<double, __DATA_TYPE>::value) {
 			r = fscanf(file, "%lf", &temp);
 			cudaMemcpy(&d_mat[0][i], &temp, sizeof(float), cudaMemcpyHostToDevice);
@@ -227,13 +221,11 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 			r = fscanf(file, "%f", &temp1);
 			cudaMemcpy(&d_mat[0][i], &temp1, sizeof(double), cudaMemcpyHostToDevice);
 		}
-		cout << i << endl;
 		if (r == EOF || r == 0) {
 			printf("Read file of data1.txt ERROR!!!!!");
 			cout << i << endl;
 		}
 	}
-	cout << 6 << endl;
 	if (res == 0) {
 		for (int i = 1; i < my_np; i++) {
 			//memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
@@ -246,7 +238,7 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 			cudaMemcpy(d_mat[i], d_mat[0], sizeof(float) * size, cudaMemcpyDeviceToDevice);
 		}
 	}
-	cout << 7 << endl;
+	fclose(file);
 	free_device_list(info.device);
 	return d_mat;
 }
