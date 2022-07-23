@@ -197,11 +197,13 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 
 	if (res == 0) {
 		for (int i = 0; i < my_np; i++) {
+			//cudaMalloc((void**)&d_mat[i], sizeof(float) * size * size);
 			d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}
 	else {
 		for (int i = 0; i < deviceCounts; i++) {
+			
 			d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}

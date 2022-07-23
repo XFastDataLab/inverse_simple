@@ -19,8 +19,8 @@ int my_gauss_inverse_gpu_by_cublas(float** d_in, int size, float** d_out, int my
 
 	float** srchd = new float* [my_np];
 	for (int i = 0; i < my_np; i++) {
-		cudaMalloc((void**)&srchd[i], sizeof(double) * size * size);
-		cudaMemcpy(srchd[i], d_in[i], sizeof(double) * size * size, cudaMemcpyHostToDevice);
+		cudaMalloc((void**)&srchd[i], sizeof(float) * size * size);
+		cudaMemcpy(srchd[i], d_in[i], sizeof(float) * size * size, cudaMemcpyHostToDevice);
 	}
 
 	float** gpuMat;

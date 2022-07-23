@@ -52,17 +52,12 @@ void check_inversed_matrix2(__DATA_TYPE** matrix, bool u, int n, int my_np, std:
 				writeCheckedInfo(n, my_np, i, realVal, matrix[i][0]);
 				//tools_print_matrix(matrix[i], n);
 			}
-
-			
 		}
 	}
 	else {
 		printf("\nERROR!!!\n");
 	}
 }
-
-
-
 
 
 
