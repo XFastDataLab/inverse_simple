@@ -31,9 +31,4 @@
   <ItemGroup>
     <Text Include="results_gpu.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Filter Include="function">
-      <UniqueIdentifier>{dee3c6da-039d-4ab3-b5c5-746032b97e8c}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
 </Project>
