@@ -6,6 +6,15 @@
 /*
     Debug output
 */
+
+void tools_gpuAssert(cudaError_t code)
+{
+	if (code != cudaSuccess)
+	{
+		fprintf(stderr, "GPUassert: %s\n", cudaGetErrorString(code));
+	}
+}
+
 void tools_gpuAssert(cudaError_t code, const char *file, int line)
 {
    if (code != cudaSuccess)

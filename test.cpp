@@ -73,14 +73,25 @@ void test_cublas(int size, int my_np, std::string type) {
 	}
 
 	CYW_TIMER timer;
+	cudaEvent_t start, stop;
+	float time_elapsed = 0;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
 	timer.start_my_timer();
 
+	//tools_gpuAssert(cudaEventRecord(start, 0));
 	int u = my_gauss_inverse_gpu_by_cublas(matrix_gpu, size, d_out_gpu, my_np);
+	//tools_gpuAssert(cudaEventRecord(stop, 0));
 
-
-
+	//cudaEventSynchronize(start);    //Waits for an event to complete.
+	//cudaEventSynchronize(stop);    //Waits for an event to complete.Record之前的任务
+	//tools_gpuAssert(cudaEventElapsedTime(&time_elapsed, start, stop));    //计算时间差
+	//cudaEventDestroy(start);
+	//cudaEventDestroy(stop);
 	timer.stop_my_timer();
+	//printf("执行时间：%f(ms)\n", time_elapsed);
 	timer.print();
+	writeGPUResults(timer.get_my_timer());
 
 	for (int i = 0; i < my_np; i++) {
 		cudaFree(matrix_gpu[i]);

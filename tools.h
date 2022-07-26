@@ -24,6 +24,9 @@ typedef enum cudaError cudaError_t;
 /*
     Debug output
 */
+
+void tools_gpuAssert(cudaError_t code);
+
 void tools_gpuAssert(cudaError_t code, const char *file, int line);
 
 void tools_gpuAssert(int index, cudaError_t code, const char* file, int line);
