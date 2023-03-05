@@ -6,7 +6,7 @@
     <CudaCompile Include="tools.cu" />
     <CudaCompile Include="tools_for_matrix_inverse.cu" />
     <CudaCompile Include="tools_for_more_gpu.cu" />
-    <CudaCompile Include="single_block_single_gauss_inverse_gpu.cu" />
+    <CudaCompile Include="single_block_single_O%28n%29_gauss_inverse_gpu.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config_params.cpp" />
@@ -25,7 +25,7 @@
     <ClInclude Include="tools.h" />
     <ClInclude Include="tools_for_matrix_inverse.h" />
     <ClInclude Include="tools_for_more_gpu.h" />
-    <ClInclude Include="single_block_single_gauss_inverse_gpu.h" />
+    <ClInclude Include="single_block_single_O%28n%29_gauss_inverse_gpu.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />

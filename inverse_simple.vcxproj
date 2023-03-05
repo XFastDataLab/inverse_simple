@@ -87,7 +87,7 @@
   <ItemGroup>
     <CudaCompile Include="device_info.cu" />
     <CudaCompile Include="main.cu" />
-    <CudaCompile Include="single_block_single_gauss_inverse_gpu.cu" />
+    <CudaCompile Include="single_block_single_O%28n%29_gauss_inverse_gpu.cu" />
     <CudaCompile Include="tools.cu" />
     <CudaCompile Include="tools_for_matrix_inverse.cu" />
     <CudaCompile Include="tools_for_more_gpu.cu" />
@@ -108,7 +108,7 @@
     <ClInclude Include="device_info.h" />
     <ClInclude Include="gauss_inverse_cpu.h" />
     <ClInclude Include="host_info.h" />
-    <ClInclude Include="single_block_single_gauss_inverse_gpu.h" />
+    <ClInclude Include="single_block_single_O%28n%29_gauss_inverse_gpu.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="tools_for_matrix_inverse.h" />

@@ -31,7 +31,7 @@
  * Gauss求逆，使用O(n^3)的时间复杂度，尽量让所有线程都做同样的工作
  **/
 static __global__
-void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int size, int dy) {
+void Gauss_Jordan_Inverse1(__DATA_TYPE* mat_tmp, int size, int dy) {
 
 	int idx = threadIdx.x;
 	int idy = threadIdx.y;
@@ -75,8 +75,54 @@ void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int size, int dy) {
 }
 
 
+
+/*
+* 一个block中有32*32个线程，这也是当前gpu中每个线程块中所允许的最大线程数量
+*一个block块处理一个32*32的矩阵求逆，尝试将时间复杂度降到O(n);
+*/
+
+static __global__
+void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int n, int dy) {
+
+	int idx = threadIdx.x;
+	int idy = threadIdx.y;
+	int bx = blockIdx.x;
+
+	if (idx >= n || idy >= n) return;
+	mat_tmp += bx * n * n;
+
+	extern __shared__ __DATA_TYPE mat[]; // O（n）情况下，matrix最大为1024个元素。
+
+	mat[idx * n + idy] = mat_tmp[idx * n + idy];
+	__syncthreads();
+	for (int k = 0; k < n; k++) {
+		//1.m(k,k) = 1/m(k,k)
+		mat[k * n + k] = 1.0 / mat[k * n + k];
+		double c = mat[k * n + k];
+		//__syncthreads();
+		//2.m(i,k) = -m(k,k) * m(i,k), i!=k
+		if (idx != k && idy == 0) mat[idx * n + k] *= -c;
+
+		__syncthreads();
+		//3.m(i,j) = m(i,j) + m(i,k) * m(k,j), i,j != k
+		if (idx != k && idy != k) mat[idx * n + idy] += mat[idx * n + k] * mat[k * n + idy];
+		//__syncthreads();
+		//4.m(k,j) = m(k,k) * m(k,j), j != k
+		if (idy != k && idx == 0) mat[k * n + idy] *= c;
+		__syncthreads();
+
+	}
+	mat_tmp[idx * n + idy] = mat[idx * n + idy];
+}
+
+
 static
 int single_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
+
+	if (size > 32) {
+		writeGPUResults(0);
+		return 1;
+	}
 
 	int deviceSno = 0;
 	cudaSetDevice(deviceSno);
@@ -136,6 +182,11 @@ int single_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
 
 static
 int more_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
+
+	if (size > 32) {
+		writeGPUResults(0);
+		return 1;
+	}
 
 	int deviceSno = 0;
 	cudaSetDevice(deviceSno);

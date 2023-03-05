@@ -53,7 +53,7 @@ typedef  float __DATA_TYPE;
 
 #include "gauss_inverse_cpu.h"
 
-#include "single_block_single_gauss_inverse_gpu.h"
+#include "single_block_single_O(n)_gauss_inverse_gpu.h"
 
 
 
