@@ -57,35 +57,18 @@ void test_data1() {
 			CheckMemoryInfo(mat_sizes[i], mat_numbers[j]);
 			setConfigInt("MY_NP", mat_numbers[j]);
 			test_algorithm2(mat_sizes[i], mat_numbers[j], "definite");
-			//test_batched_single_block_mul_gauss_inverse_gpu(mat_sizes[i], mat_numbers[j], "definite");
-			//test_cublas(mat_sizes[i], mat_numbers[j], "definite");
-			//printf("\n\n*****TEST SINGLE BLOCK MULTIBL GAUSS INVERSE ON MULTIPLE CPUs!!!*****\n");
-			//printf("\n\n*****size:%d,number of matrix is %d\n", mat_sizes[i], mat_numbers[j]);
-			//test_gauss_on_cpu(mat_sizes[i], mat_numbers[j], "definite");
+			
 		}
 		writeCPUResults(0, true);
 		writeGPUResults(0, true);
 	}
 
-	//算法3：多GPU测试算法2
-	/*for (int i = 0; i < sizeOfmatSizes; i++) {
-		setConfigInt("MY_N", mat_sizes[i]);
-		for (int j = 0; j < sizeOfmatNum; j++) {
-			CheckMemoryInfo(mat_sizes[i], mat_numbers[j]);
-			setConfigInt("MY_NP", mat_numbers[j]);
-			test_more_gpu_for_single_block_mul_gauss_inverse_gpu(mat_sizes[i], mat_numbers[j], "definite");
-		}
-		writeCPUResults(0, true);
-		writeGPUResults(0, true);
-	}*/
-
-	//test_cublas(mat_sizes[2], mat_numbers[12], "definite");
-
-	//test_single_block_mul_gauss_inverse_gpu(mat_sizes[2], mat_numbers[12], "definite");
+	
 }
 
 int main() {
 	
+
 	test_data1();
 
 

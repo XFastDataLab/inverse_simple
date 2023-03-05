@@ -232,7 +232,7 @@ double** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 			memcpy(d_mat[i], d_mat[0], sizeof(double) * size);
 		}
 	}
-
+	fclose(file);
 	free_device_list(info.device);
 	return d_mat;
 }

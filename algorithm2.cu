@@ -59,50 +59,6 @@ void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int size, int dy) {
 }
 
 
-//static __global__
-//void Gauss_Jordan_Inverse(__DATA_TYPE* mat_tmp, int size, int dy) {
-//
-//	register int idx = threadIdx.x%size;
-//	register int idy = threadIdx.x/size;
-//	register int bx = blockIdx.x;
-//
-//	register int dis = idy * size * size; //Compute the distance between idy-th matrix and the address of mat_tmp.
-//
-//	if (idx >= size || idy >= dy) return;
-//
-//	mat_tmp += bx * size * size * dy;
-//	extern __shared__ __DATA_TYPE mat[]; //using static shared memory 48 KB
-//	Matrix_copy_glob2shr(mat_tmp + idx * size + dis, mat + idx * size + dis, size);
-//	__syncthreads();
-//
-//	int i, j, k;
-//	__DATA_TYPE c;
-//	register int ksize = dis;
-//	for (k = 0; k < size; k++) {
-//		//1.m(k,k) = 1/m(k,k)
-//		register int mid = ksize + k;
-//		mat[mid] = 1.0 / mat[mid];
-//		c = mat[mid];
-//
-//		//2.m(i,k) = -m(k,k) * m(i,k), i!=k
-//		if (idx != k) mat[idx * size + k + dis] *= -1 * c;
-//
-//		__syncthreads();
-//		//3.m(i,j) = m(i,j) + m(i,k) * m(k,j), i,j != k
-//		register int tem = dis;
-//		for (i = 0; i < size; i++) {
-//			if (idx != k ||i!=k) mat[tem + idx] += mat[tem + k] * mat[ksize + idx];
-//			tem += size;
-//		}
-//
-//		//4.m(k,j) = m(k,k) * m(k,j), j != k
-//		if (idx != k)  mat[ksize + idx] *= c;
-//		__syncthreads();
-//		ksize += size;
-//	}
-//
-//	Matrix_copy_shr2glob(mat + idx * size + dis, mat_tmp + idx * size + dis, size);
-//}
 
 static
 int single_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
@@ -123,16 +79,8 @@ int single_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
 	}
 	int maxbytes = ds->sharedMemPerBlockOptin; // 65535 byte = 64 KB
 	cudaFuncSetAttribute(Gauss_Jordan_Inverse, cudaFuncAttributeMaxDynamicSharedMemorySize, maxbytes);
-	int dy = min(floor(ds->sharedMemPerBlockOptin * 1.0 / (size * size * sizeof(__DATA_TYPE))), my_np);
-	dy = min(1024 / size, dy); //dy->[1,1024]
+	int dy = 1;
 	int matMaxSize = floor(sqrt(maxbytes * 1.0 / sizeof(__DATA_TYPE)));
-
-	//Output some necessary infomation for remind you!
-	int remain = my_np % dy;
-	printf("%d matrix inverse works per block,MatMaxSize:%d\n", dy, matMaxSize);
-	if (remain) {
-		printf("Notice:There have %d last matrixes will not be inversed,You would better set my_np to multiples of %d!!\n", remain, dy);
-	}
 
 	float elapse_time = 0;
 	cudaEventCreate(&start);
@@ -199,16 +147,9 @@ int more_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
 	int sm = ds->SMCount;
 	int tasksPerStream = my_np / sm;
 	int dis = tasksPerStream * size * size;
-	//Compute number of works every block.
-	/*int remain = my_np % sm;
-	if (remain) {
-		printf("MSM Notice:there have %d last matrix(es) won't be inversed,becasuse be ignored. You would be better set my_np to mutilples of %d. \n\n",remain, sm);
-	}*/
 
-	int dy = min(floor(ds->sharedMemPerBlockOptin * 1.0 / (size * size * sizeof(__DATA_TYPE))), tasksPerStream);
-	dy = min(1024 / size, dy); //dy->[1,1024]
-	//int matMaxSize = floor(sqrt(maxbytes * 1.0 / sizeof(__DATA_TYPE)));
 
+	int dy = 1;
 
 	__DATA_TYPE* d_out;
 
@@ -217,12 +158,6 @@ int more_sm_inverse_gauss_gpu(__DATA_TYPE* out, int size, int my_np) {
 		gpuErrchk(cudaStreamCreate(&stream[i]));
 	}
 
-	/*printf("%d matrix inverse works per block,MatMaxSize:%d\n", dy, matMaxSize);
-	remain = tasksPerStream % dy;
-	printf("remain:%d\n", remain);
-	if (remain) {
-		printf("MulSm Notice:There have %d last matrixes will not be inversed,it will happen every %d matrixes,You would better set my_np to multiples of %d!!\n", remain,tasksPerStream, sm*dy);
-	}*/
 
 	dim3 blocks(tasksPerStream / dy), threads(size,dy);
 
