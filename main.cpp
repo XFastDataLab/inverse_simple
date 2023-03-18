@@ -48,13 +48,33 @@ void test_data1() {
 			CheckMemoryInfo(mat_sizes[i], mat_numbers[j]);
 			printf("================Gauss inverse test on CPU=============\n");
 			printf("========n:%d, number:%d================", mat_sizes[i], mat_numbers[j]);
-			test_gauss_on_cpu(mat_sizes[i], mat_numbers[j], "definite");
+			test_gauss_on_omp(mat_sizes[i], mat_numbers[j], "definite");
 		}
 		writeCPUResults(0, true);
 	}
 }
 
+using namespace std;
+
+
+/// <summary>
+/// omp_get_num_threads()
+/// </summary>
+/// <returns></returns>
 int main() {
+
+
+	/*std::cout << "parallel begin:\n";
+
+	#pragma omp parallel for 
+
+	for (int i = 0; i < 10; i++) {
+			cout <<"id:" << i << ",线程：" << omp_get_thread_num() << endl;
+	}
+	
+	std::cout << "\n parallel end.\n";*/
+
+
 	test_data1();
 	return 0;
 }

@@ -14,6 +14,7 @@ static void printInfo(__DATA_TYPE data) {
 	}
 }
 
+
 /*
   Print a Matrix with with N x N dimension
 */
@@ -28,6 +29,14 @@ void tools_print_matrix(__DATA_TYPE* matrix, int N){
 	}
 	printf("\n\r");
 }
+
+
+void tools_print_matrices(__DATA_TYPE* matrix, int size, int my_np) {
+	for (int i = 0; i < my_np; i++) {
+		tools_print_matrix(matrix + i * size * size, size);
+	}
+}
+
 
 void tools_print_array(__DATA_TYPE* array, int N) {
 	int i;

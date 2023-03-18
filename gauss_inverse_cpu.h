@@ -13,5 +13,7 @@
 
 int gauss_inverse_cpu(__DATA_TYPE* out, int size);
 
+int gauss_inverse_omp(__DATA_TYPE* out, int size);
+
 #endif // !GAUSS_INVERSE_CPU_H
 

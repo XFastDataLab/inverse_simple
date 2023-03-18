@@ -13,5 +13,7 @@
 
 void test_gauss_on_cpu(int n, int my_np, std::string type);
 
+void test_gauss_on_omp(int n, int my_np, std::string type);
+
 #endif // !MY_TEST_H
 

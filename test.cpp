@@ -70,3 +70,27 @@ void test_gauss_on_cpu(int n,int my_np, std::string type=std::string("definite")
 	//save results to the file of reaulst_cpu.txt.
 	writeCPUResults(costed_time);
 }
+
+
+void test_gauss_on_omp(int n,int my_np, std::string type=std::string("definite")) {
+	__DATA_TYPE* matrix;
+	CYW_TIMER timer;
+	
+	matrix = random_matrix_generate_by_matlab(n,my_np, string("./data/").append(type).append("/").append(num2str(n)).append("/data1.txt"));
+	timer.start_my_timer();
+	for (int i = 0; i < my_np; i++) {
+		gauss_inverse_omp(matrix + i * n * n, n);
+	}
+	timer.stop_my_timer();
+	
+	double costed_time = timer.get_my_timer();
+	printf("\n*****CPU costed time:");
+	timer.print();
+	check_inversed_matrix(matrix, true, n,my_np,type);
+	//tools_print_matrices(matrix, n, my_np);
+	if (matrix) free(matrix);
+	//save results to the file of reaulst_cpu.txt.
+
+	
+	writeCPUResults(costed_time);
+}
