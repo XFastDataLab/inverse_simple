@@ -78,8 +78,9 @@ void test_gauss_on_omp(int n,int my_np, std::string type=std::string("definite")
 	
 	matrix = random_matrix_generate_by_matlab(n,my_np, string("./data/").append(type).append("/").append(num2str(n)).append("/data1.txt"));
 	timer.start_my_timer();
+	#pragma omp parallel for 
 	for (int i = 0; i < my_np; i++) {
-		gauss_inverse_omp(matrix + i * n * n, n);
+		gauss_inverse_cpu(matrix + i * n * n, n);
 	}
 	timer.stop_my_timer();
 	
