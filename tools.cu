@@ -287,6 +287,10 @@ void writeGPUResults(string s) {
 	fs.close();
 }
 
+/*
+*
+* records the runtime of the Alg to "results_gpu.txt".
+*/
 void writeGPUResults(double time, bool isNextLine) {
 	fstream fs;
 	fs.open("./results_gpu.txt", std::fstream::app);

@@ -11,7 +11,7 @@
 #ifndef MY_TEST_H
 #define MY_TEST_H
 
-void test_cublas(int size, int my_np, std::string type);
+void test_cublas(int size, int my_np, std::string type = "definite");
 
 #endif // !MY_TEST_H
 

@@ -55,7 +55,7 @@ void test_data1() {
 		for (int j = 0; j < sizeOfmatNum; j++) {
 			CheckMemoryInfo(mat_sizes[i], mat_numbers[j]);
 			setConfigInt("MY_NP", mat_numbers[j]);
-			test_cublas(mat_sizes[i], mat_numbers[j], "definite");
+			test_cublas(mat_sizes[i], mat_numbers[j]);
 		}
 		writeCPUResults(0, true);
 		writeGPUResults(0, true);
@@ -64,6 +64,9 @@ void test_data1() {
 
 int main() {
 	
+	//warm up
+	test_cublas(8, 2048);
+
 	test_data1();
 	return 0;
 }
