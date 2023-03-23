@@ -65,8 +65,8 @@ void test_data1() {
 int main() {
 	
 	//warm up
-	test_cublas(70, 81920);
+	test_cublas(8, 2048);
 
-	//test_data1();
+	test_data1();
 	return 0;
 }
