@@ -55,6 +55,13 @@ void tools_print_matrix(__DATA_TYPE* matrix, int N){
 	printf("\n\r");
 }
 
+void tools_print_matrices(__DATA_TYPE** matrix, int N, int my_np) {
+	for (int i = 0; i < my_np; i++) {
+		tools_print_matrix(matrix[i], N);
+	}
+	
+}
+
 void tools_print_array(__DATA_TYPE* array, int N) {
 	int i;
 	for (i = 0; i < N; ++i) {
@@ -204,14 +211,14 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 	float** d_mat = new float* [my_np];
 	if (res == 0) {
 		for (int i = 0; i < my_np; i++) {
-			cudaMalloc((void**)&d_mat[i], sizeof(float) * size);
-			//d_mat[i] = (float*)malloc(sizeof(float) * size);
+			//cudaMalloc((void**)&d_mat[i], sizeof(float) * size);
+			d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}
 	else {
 		for (int i = 0; i < deviceCounts; i++) {
-			cudaMalloc((void**)&d_mat[i], sizeof(float) * size);
-			//d_mat[i] = (float*)malloc(sizeof(float) * size);
+			//cudaMalloc((void**)&d_mat[i], sizeof(float) * size);
+			d_mat[i] = (float*)malloc(sizeof(float) * size);
 		}
 	}
 
@@ -223,12 +230,14 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 		double temp1;
 		if (is_same<double, __DATA_TYPE>::value) {
 			r = fscanf(file, "%lf", &temp);
-			cudaMemcpy(&d_mat[0][i], &temp, sizeof(float), cudaMemcpyHostToDevice);
+			memcpy(&d_mat[0][i], &temp, sizeof(float));
+			//cudaMemcpy(&d_mat[0][i], &temp, sizeof(float), cudaMemcpyHostToDevice);
 		}
 		
 		else if (is_same<float, __DATA_TYPE>::value) {
 			r = fscanf(file, "%f", &temp1);
-			cudaMemcpy(&d_mat[0][i], &temp1, sizeof(double), cudaMemcpyHostToDevice);
+			memcpy(&d_mat[0][i], &temp1, sizeof(double));
+			//cudaMemcpy(&d_mat[0][i], &temp1, sizeof(double), cudaMemcpyHostToDevice);
 		}
 		if (r == EOF || r == 0) {
 			printf("Read file of data1.txt ERROR!!!!!");
@@ -237,14 +246,14 @@ float** random_matrix_generate_by_matlab2(int n, int my_np, std::string path) {
 	}
 	if (res == 0) {
 		for (int i = 1; i < my_np; i++) {
-			//memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
-			cudaMemcpy(d_mat[i], d_mat[0], sizeof(float) * size, cudaMemcpyDeviceToDevice);
+			memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
+			//cudaMemcpy(d_mat[i], d_mat[0], sizeof(float) * size, cudaMemcpyDeviceToDevice);
 		}
 	}
 	else {
 		for (int i = 1; i < deviceCounts; i++) {
-			//memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
-			cudaMemcpy(d_mat[i], d_mat[0], sizeof(float) * size, cudaMemcpyDeviceToDevice);
+			memcpy(d_mat[i], d_mat[0], sizeof(float) * size);
+			//cudaMemcpy(d_mat[i], d_mat[0], sizeof(float) * size, cudaMemcpyDeviceToDevice);
 		}
 	}
 	fclose(file);

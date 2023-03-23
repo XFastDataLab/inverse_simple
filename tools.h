@@ -36,6 +36,8 @@ void tools_gpuAssert(int index, cudaError_t code, const char* file, int line);
 */
 void tools_print_matrix(__DATA_TYPE * matrix, int N);
 
+void tools_print_matrices(__DATA_TYPE **matrix, int N, int my_np);
+
 void tools_print_array(__DATA_TYPE* array, int N);
 
 /*

@@ -71,6 +71,9 @@ void test_cublas(int size, int my_np, std::string type) {
 		memset(d_out_gpu[i], 0, sizeof(float) * size * size);
 	}
 
+
+	//tools_print_matrices(matrix_gpu, size, my_np);
+
 	CYW_TIMER timer;
 	timer.start_my_timer();
 
@@ -81,8 +84,12 @@ void test_cublas(int size, int my_np, std::string type) {
 	timer.print();
 	
 
+
+	//tools_print_matrices(d_out_gpu, size, my_np);
+	
+
 	for (int i = 0; i < my_np; i++) {
-		cudaFree(matrix_gpu[i]);
+		free(matrix_gpu[i]);
 		if (d_out_gpu[i]) free(d_out_gpu[i]);
 	}
 	if (matrix_gpu) delete[] matrix_gpu;
