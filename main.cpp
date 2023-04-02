@@ -72,7 +72,13 @@ int main() {
 			cout <<"id:" << i << ",线程：" << omp_get_thread_num() << endl;
 	}
 	
-	std::cout << "\n parallel end.\n";*/
+	std::cout << "\n parallel end.\n";
+
+	#pragma omp parallel
+	{
+		cout << "线程总个数为：" << omp_get_num_threads() << endl;
+	}*/
+	
 
 
 	test_data1();
